@@ -1,0 +1,7 @@
+### get redis string value
+GET http://localhost:8080/redis/key/{{keyValue}}
+Accept: application/json
+
+### set redis string value
+POST http://localhost:8080/redis/key/{{keyValue}}?value={{value}}
+Content-Type: application/json
