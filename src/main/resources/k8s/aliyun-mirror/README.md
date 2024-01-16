@@ -1,0 +1,1 @@
+#### For https://github.com/chenyunzheng/k8s-mirror-registry
