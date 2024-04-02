@@ -14,6 +14,7 @@
 		<spring-boot.version>2.7.6</spring-boot.version>
 		<spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
 		<spring-cloud.version>2021.0.5</spring-cloud.version>
+		<spring-restdocs.version>2.0.7.RELEASE</spring-restdocs.version>
 	</properties>
 
 	<dependencyManagement>
@@ -78,6 +79,10 @@
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
 <!--		<dependency>-->
 <!--			<groupId>org.springframework.experimental</groupId>-->
@@ -160,6 +165,11 @@
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.restdocs</groupId>
+			<artifactId>spring-restdocs-mockmvc</artifactId>
+			<scope>test</scope>
+		</dependency>
 <!--		<dependency>-->
 <!--			<groupId>org.springframework.amqp</groupId>-->
 <!--			<artifactId>spring-rabbit-test</artifactId>-->
@@ -193,6 +203,11 @@
 					<source>11</source>
 					<target>11</target>
 					<encoding>UTF-8</encoding>
+					<compilerArgs>
+						<arg>--add-exports=java.base/jdk.internal.access=ALL-UNNAMED</arg>
+						<arg>--add-exports=java.base/jdk.internal=ALL-UNNAMED</arg>
+						<arg>--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED</arg>
+					</compilerArgs>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -223,6 +238,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>3.2.2</version>
 				<configuration>
 					<excludes>
 						<exclude>
