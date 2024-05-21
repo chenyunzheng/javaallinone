@@ -1,8 +1,10 @@
 package com.andrew.vapp.controller;
 
-import com.chris.allinone.spring.springboot.vapp.service.VService;
+import com.andrew.vapp.service.VService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * @author chrischen

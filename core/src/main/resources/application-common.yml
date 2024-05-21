@@ -1,0 +1,6 @@
+archive:
+  feign:
+    client:
+      label:
+        url: ${COMMON_ARCHIVE_FEIGN_CLIENT_LABEL_URL}
+

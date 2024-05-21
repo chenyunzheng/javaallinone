@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "archive.feign.client.label.url",
+      "type": "java.lang.String",
+      "description": "Description for archive.feign.client.label.url."
+  }
+] }

@@ -1,0 +1,104 @@
+spring:
+  application:
+    name: allinone
+  profiles:
+    include: common
+    active: aaaa,com
+
+
+  redis:
+    cluster:
+      nodes:
+        - 172.38.40.143:7001
+        - 172.38.40.143:7002
+        - 172.38.40.143:7003
+        - 172.38.40.143:7004
+        - 172.38.40.143:7005
+        - 172.38.40.143:7006
+      max-redirects: 5
+    timeout: 1s
+    connect-timeout: 1s
+    lettuce:
+      pool:
+        enabled: true
+        max-active: 10
+        max-idle: 10
+        min-idle: 0
+        max-wait: -1ms
+#      cluster:
+#        refresh:
+#          dynamic-refresh-sources: true
+  kafka:
+    producer:
+      bootstrap-servers:
+        - 172.38.170.180:9092
+        - 172.38.170.181:9092
+        - 172.38.170.182:9092
+      acks: 1
+      buffer-memory: 33554432
+      batch-size: 16384
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        linger.ms: 20
+    consumer:
+      bootstrap-servers:
+        - 172.38.170.180:9092
+        - 172.38.170.181:9092
+        - 172.38.170.182:9092
+      group-id: defaultGroup
+      enable-auto-commit: false
+      auto-offset-reset: earliest
+      max-poll-records: 200
+      heartbeat-interval: 1000
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        max.poll.interval.ms: 30000
+        session.timeout.ms: 10000
+    listener:
+      ack-mode: manual_immediate
+
+  datasource:
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 20
+      connection-test-query: SELECT 1
+#      driver-class-name: org.postgresql.Driver
+#      jdbc-url: jdbc:postgresql://172.38.170.153:5432/ehl_jixian
+#      username: gpadmin
+#      password: GpEdp@123~
+
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/allinone?useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 1qaz2wsx
+  jpa:
+    show-sql: true
+
+
+
+#mybatis:
+#  mapper-locations:
+#    - classpath:mapper/*.xml
+#  configuration:
+#    map-underscore-to-camel-case: true
+#    lazy-loading-enabled: true
+#    aggressive-lazy-loading: false
+#  type-aliases-package: com.airuolin.project.model
+
+kafka:
+  listener:
+    demo:
+      enabled: "false"
+
+management:
+  health:
+    defaults:
+      enabled: false
+logging:
+  level:
+    - com.ehualu.utb.business.dao: debug
+#feign:
+#  client:
+#    config:
