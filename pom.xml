@@ -10,7 +10,8 @@
         <module>vspringboot</module>
 		<module>core</module>
 		<module>vapp</module>
-	</modules>
+        <module>vmybatis-spring</module>
+    </modules>
     <name>allinone</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
