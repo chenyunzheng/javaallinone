@@ -28,12 +28,13 @@ public class VMapperScanClassPathBeanDefinitionScanner extends ClassPathBeanDefi
     protected Set<BeanDefinitionHolder> doScan(String... basePackages) {
         Set<BeanDefinitionHolder> beanDefinitionHolders = super.doScan(basePackages);
         for (BeanDefinitionHolder beanDefinitionHolder : beanDefinitionHolders) {
-            BeanDefinition beanDefinition = beanDefinitionHolder.getBeanDefinition();
+            //BeanDefinition beanDefinition = beanDefinitionHolder.getBeanDefinition();
+            GenericBeanDefinition beanDefinition = (GenericBeanDefinition) beanDefinitionHolder.getBeanDefinition();
             String mapperInterface = beanDefinition.getBeanClassName();
             beanDefinition.setBeanClassName(VMapperFactoryBean.class.getName());
             beanDefinition.getConstructorArgumentValues().addGenericArgumentValue(mapperInterface);
             //GenericBeanDefinition
-            //beanDefinition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
+            beanDefinition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
         }
         return beanDefinitionHolders;
     }
