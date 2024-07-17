@@ -96,6 +96,21 @@ management:
   health:
     defaults:
       enabled: false
+  info:
+    git:
+      mode: simple
+
+  endpoint:
+    loggers:
+      enabled: true
+  metrics:
+    enable: true
+    export:
+      prometheus:
+        enabled: true
+        descriptions: true
+        step: 1m
+
 logging:
   level:
     - com.ehualu.utb.business.dao: debug
