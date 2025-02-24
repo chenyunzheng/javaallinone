@@ -12,6 +12,7 @@
 		<module>vapp</module>
         <module>vmybatis-spring</module>
         <module>middleware</module>
+        <module>plugin</module>
     </modules>
     <name>allinone</name>
 	<description>Demo project for Spring Boot</description>
