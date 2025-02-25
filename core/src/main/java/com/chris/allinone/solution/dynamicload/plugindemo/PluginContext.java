@@ -8,6 +8,7 @@ import org.apache.commons.io.monitor.FileAlterationObserver;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -37,7 +38,15 @@ public class PluginContext {
         if (jarFileArray == null) {
             return;
         }
-        PluginEntry[] pluginEntries = PluginUtil.getPluginEntries(jarFileArray);
+        //copy file first to avoid occupy
+        File[] tempFiles;
+        try {
+            PluginUtil.clearTempDir();
+            tempFiles = PluginUtil.copyToTempDir(jarFileArray);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        PluginEntry[] pluginEntries = PluginUtil.getPluginEntries(tempFiles);
         if (pluginEntries.length == 0) {
             return;
         }

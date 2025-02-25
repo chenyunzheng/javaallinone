@@ -1,5 +1,6 @@
 package com.chris.allinone.solution.dynamicload.plugindemo.utils;
 
+import com.chris.allinone.solution.dynamicload.plugindemo.Constant;
 import com.chris.allinone.solution.dynamicload.plugindemo.Plugin;
 import com.chris.allinone.solution.dynamicload.plugindemo.PluginEntry;
 import org.springframework.asm.ClassReader;
@@ -11,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
@@ -24,21 +26,36 @@ import java.util.jar.JarFile;
 public class PluginUtil {
 
     private static final String PLUGIN_CLASS_NAME = Plugin.class.getName().replace('.', '/');
-    private static final String TEMP_DIR = "D:\\tmp";
 
     private PluginUtil() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
+    public static void clearTempDir() {
+        File tempDir = new File(Constant.TEMP_DIR);
+        if (!tempDir.exists()) {
+            tempDir.mkdirs();
+        }
+        File[] listFiles = tempDir.listFiles();
+        if (listFiles != null) {
+            Arrays.stream(listFiles).forEach(File::delete);
+        }
+    }
+
+    public static File[] copyToTempDir(File[] jarFileArray) throws IOException {
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        for (int i = 0; i < jarFileArray.length; i++) {
+            File file = jarFileArray[i];
+            String fileName = file.getName().replace(".jar", Constant.TEMP_FLAG + timestamp + ".jar");
+            file = Files.copy(file.toPath(), Path.of(Constant.TEMP_DIR, fileName)).toFile();
+            jarFileArray[i] = file;
+        }
+        return jarFileArray;
+    }
+
     public static PluginEntry[] getPluginEntries(File[] jarFileArray) {
         List<PluginEntry> pluginEntryList = new ArrayList<>();
         for (File file : jarFileArray) {
-//            // copy first to avoid occupy problem
-//            try {
-//                file = Files.copy(file.toPath(), Path.of(TEMP_DIR, file.getName())).toFile();;
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
             try (JarFile jarFile = new JarFile(file)) {
                 Enumeration<JarEntry> entries = jarFile.entries();
                 while (entries.hasMoreElements()) {

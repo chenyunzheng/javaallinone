@@ -27,8 +27,8 @@
     </dependencies>
 
     <build>
-<!--        <finalName>es-plugin</finalName>-->
+        <finalName>es-plugin</finalName>
 <!--        <finalName>hive-plugin</finalName>-->
-        <finalName>pg-plugin</finalName>
+<!--        <finalName>pg-plugin</finalName>-->
     </build>
 </project>

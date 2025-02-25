@@ -1,5 +1,6 @@
 package com.chris.allinone.solution.dynamicload.plugindemo.listener;
 
+import com.chris.allinone.solution.dynamicload.plugindemo.Constant;
 import com.chris.allinone.solution.dynamicload.plugindemo.Plugin;
 import com.chris.allinone.solution.dynamicload.plugindemo.PluginClassLoader;
 import com.chris.allinone.solution.dynamicload.plugindemo.PluginEntry;
@@ -8,9 +9,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.monitor.FileAlterationListenerAdaptor;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -31,20 +38,30 @@ public class PluginListener extends FileAlterationListenerAdaptor {
 
     @Override
     public void onFileDelete(File file) {
-        PluginEntry[] pluginEntries = PluginUtil.getPluginEntries(new File[]{file});
-        for (PluginEntry pluginEntry : pluginEntries) {
-            String pluginClassName = pluginEntry.getPluginClassName();
+        String deletedFileName = file.getName();
+        Optional<PluginEntry> optionalPluginEntry = loadedPluginEntries.values().stream()
+                .filter(e -> e.getJarEntryUrl().toString().contains("/" + deletedFileName.replace(".jar", "") + Constant.TEMP_FLAG))
+                .findFirst();
+        optionalPluginEntry.ifPresent(e -> {
+            String pluginClassName = e.getPluginClassName();
             PluginEntry removedPluginEntry = loadedPluginEntries.remove(pluginClassName);
             //help gc to unload class
             removedPluginEntry.setPlugin(null);
             removedPluginEntry.setPluginClass(null);
             log.info("Plugin: {} removed.", pluginClassName);
-        }
+        });
     }
 
     @Override
     public void onFileCreate(File file) {
-        PluginEntry[] pluginEntries = PluginUtil.getPluginEntries(new File[]{file});
+        //copy file first to avoid occupy
+        File[] tempFiles;
+        try {
+            tempFiles = PluginUtil.copyToTempDir(new File[]{file});
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        PluginEntry[] pluginEntries = PluginUtil.getPluginEntries(tempFiles);
         if (pluginEntries.length == 0) {
             return;
         }

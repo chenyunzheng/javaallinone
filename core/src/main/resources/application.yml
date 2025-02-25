@@ -114,6 +114,17 @@ management:
 logging:
   level:
     - com.ehualu.utb.business.dao: debug
-#feign:
-#  client:
-#    config:
+
+feign:
+  client:
+    config:
+      a:
+        capabilities:
+        -
+      b:
+        capabilities:
+          -
+
+  metrics:
+    enabled: true
+
