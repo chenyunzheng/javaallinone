@@ -16,11 +16,11 @@ import java.nio.charset.StandardCharsets;
  *
  * @author andrew
  */
-public class JsonUtils {
+public class JsonUtil {
 
 	private static final ObjectMapper MAPPER = new ObjectMapper();
 
-	private static final Logger logger = LoggerFactory.getLogger(JsonUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(JsonUtil.class);
 
 	static {
 		MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
