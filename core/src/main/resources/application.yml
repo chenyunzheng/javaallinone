@@ -9,12 +9,9 @@ spring:
   redis:
     cluster:
       nodes:
-        - 172.38.40.143:7001
-        - 172.38.40.143:7002
-        - 172.38.40.143:7003
-        - 172.38.40.143:7004
-        - 172.38.40.143:7005
-        - 172.38.40.143:7006
+        - 172.38.80.151:9001
+        - 172.38.80.152:9001
+        - 172.38.80.153:9001
       max-redirects: 5
     timeout: 1s
     connect-timeout: 1s
@@ -25,7 +22,8 @@ spring:
         max-idle: 10
         min-idle: 0
         max-wait: -1ms
-#      cluster:
+    password: Ehl@123~
+  #      cluster:
 #        refresh:
 #          dynamic-refresh-sources: true
   kafka:
@@ -104,7 +102,7 @@ management:
     loggers:
       enabled: true
   metrics:
-    enable: true
+#    enable: true
     export:
       prometheus:
         enabled: true
@@ -115,16 +113,16 @@ logging:
   level:
     - com.ehualu.utb.business.dao: debug
 
-feign:
-  client:
-    config:
-      a:
-        capabilities:
-        -
-      b:
-        capabilities:
-          -
-
-  metrics:
-    enabled: true
+#feign:
+#  client:
+#    config:
+#      a:
+#        capabilities:
+#        -
+#      b:
+#        capabilities:
+#          -
+#
+#  metrics:
+#    enabled: true
 

@@ -24,13 +24,13 @@ public class KafkaConfig {
      *  //concurrency就是同组下的消费者个数，就是并发消费数，必须小于等于分区总数
      * @param consumerRecord
      */
-    @KafkaListener(id = "demo", topics = "topic_demo", groupId = "defaultGroup", autoStartup = "false")
+    @KafkaListener(id = "demo", topics = "topic_demo", groupId = "default-group-0", autoStartup = "false")
     public void kafkaDemoListener(ConsumerRecord<String, String> consumerRecord, Acknowledgment ack) {
         log.info(consumerRecord.toString());
         ack.acknowledge();
     }
 
-    @KafkaListener(id = "demo1", topics = "topic_demo", groupId = "default-group", concurrency = "3", batch = "true")
+    @KafkaListener(id = "demo1", topics = "topic_demo", groupId = "default-group-1", concurrency = "3", batch = "true")
     public void kafkaDemo1Listener(List<ConsumerRecord<String, String>> consumerRecord, Acknowledgment ack) {
         log.info(consumerRecord.toString());
         ack.acknowledge();
